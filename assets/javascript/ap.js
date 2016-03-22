@@ -8,14 +8,15 @@ var losses = 0
 var tie = 0
 var youChosen = ""
 var oppChosen = ""
-var youCoinFlip
-var oppCoinFlip
+var youCoinFlip = 0
+var oppCoinFlip = 0
+var coin = ''
 
 
 
 //*********** If You Are Seccond To Arrive ****************************
-firebase.on('child_added', function(snapshot) {
-	// debugger;
+firebase.orderByChild('you').on('child_added', function(snapshot) {
+	debugger;
 	
 	if (snapshot.val().you != playerName && snapshot.val().you != undefined && snapshot.val().player != opponent) { //you are seccond to arrive
 		opponent = snapshot.val().you
@@ -32,17 +33,31 @@ firebase.on('child_added', function(snapshot) {
 			'background-color': 'red'
 		});
 
+
+
+
 // ********** If You Are First To Arrive ********************************
-	}else if (snapshot.val().you = playerName && snapshot.val().you != undefined) { 
+	}else if (snapshot.val().you == playerName && snapshot.val().you != undefined) { 
 		$('#smackRead').prepend('<br />').prepend($('<label>').text('You have joined the game as: '+snapshot.val().you));
 
-		
-	} else if (snapshot.val().player == playerName){
-		console.log('You chose: ', youChosen)
-	} else if (snapshot.val().player == opponent) {
-		oppChosen = snapshot.val().chose;
-		console.log(opponent+' chose: '+oppChosen)
+
 	}
+// ********** RPS Toss Win/Loose *********************
+	if (snapshot.val().chose != null) {
+		debugger;
+		if (snapshot.val().player == opponent) {
+			oppChosen = snapshot.val().chose
+			$('#playerOneChoose').show(); 
+
+
+		}else if (snapshot.val().player == playerName) {
+			youChosen = snapshot.val().chose;
+			// $('#playerOneChoose').show();  
+
+		}
+	}
+
+
 	
 //*********** RPS Logic ***************************************************
 	if (youChosen.length > 0 && oppChosen.length > 0) {
@@ -98,11 +113,19 @@ firebase.on('child_added', function(snapshot) {
 	}
 });
 
+// firebase.orderByChild("who").on('child_added', function(snapshot) {
+// 	debugger;
+// 	if (snapshot.val().who != null && snapshot.val().player == playerName) {
+
+// 	}
+// });
+
+
 
 //************* Rock Paper Scissors Selection *******************************
 
 $(document).on('click', '#playerOneChoose .rock', function(){
-	// debugger;
+	debugger;
 	if (playerName != ''){
 		youChosen = 'rock'
 		$('#smackRead').prepend('<br />').prepend($('<label>').text('You chose '+youChosen));		
@@ -115,7 +138,7 @@ $(document).on('click', '#playerOneChoose .rock', function(){
 });
 
 $(document).on('click', '#playerOneChoose .paper', function(){
-	// debugger;
+	debugger;
 	if (playerName != ''){
 		youChosen = 'paper'
 		$('#smackRead').prepend('<br />').prepend($('<label>').text('You chose paper'));
@@ -128,7 +151,7 @@ $(document).on('click', '#playerOneChoose .paper', function(){
 });
 
 $(document).on('click', '#playerOneChoose .scissors', function(){
-	// debugger;
+	debugger;
 	if (playerName != ''){
 		youChosen = "scissors"
 		$('#smackRead').prepend('<br />').prepend($('<label>').text('You chose scissors'));	
@@ -161,12 +184,40 @@ $(document).on('click', '#playerOneChoose .scissors', function(){
 //***************** Coin Flip Logic **************************************
 
 var flip = function() {
-	youChosen = Math.random();
-	console.log(youChosen);
-	
-	oppChosen = Math.random();
-	console.log(oppChosen);
+	debugger;
+	if (youCoinFlip == 0) {
+		
+		youCoinFlip = Math.random();	
+
+			toss = {
+				coin: youCoinFlip,
+				who: playerName
+			}
+
+		firebase.push(toss)
+	}
 }
+
+firebase.orderByChild('who').on('child_added', function(snapshot){
+	debugger;
+	if (snapshot.val().who != null && snapshot.val().who != playerName) {
+
+		opponent = snapshot.val().who 
+		oppCoinFlip = snapshot.val().coin 
+		flip();
+	}
+
+	if (youCoinFlip != 0 && oppCoinFlip != 0 && snapshot.val().who != null && snapshot.val().who != playerName ) { //&& $( "div:contains('You go first!')" ) == false && $( "div:contains('Opponent goes first!')" ) == false ) {
+
+		if (youCoinFlip > oppCoinFlip) { //if you won the toss)
+			$('#smackRead').prepend('<br />').prepend($('<label>').text('You go first!').css('color', 'green'));
+		
+		} else { //if you didn't win the toss
+			$('#smackRead').prepend('<br />').prepend($('<label>').text('Opponent goes first!').css('color', 'red'));
+			$('#playerOneChoose').hide(); 
+		}
+	}
+});
 
 
 // When player name is entered ********************************************
@@ -185,18 +236,18 @@ $('#submitName').on('click', function() {
 	$('#player1').append(playerOneChoose);
 	$('#playerOneChoose').append(rock, paper, scissors);
 
+
 	$('#playerName').remove();
 	$('#submitName').remove()
 	$('#player-input').remove()
 	$('body').prepend($('<div id="player-input">').text('Select one!'))	
-	// debugger;
+
 
 	user = {
 		you: playerName 
 	}
-
+	flip();
 	firebase.push(user); //submmit player to firebase
-
 	return false; //last line in #submitName on.click *************
 });
 
