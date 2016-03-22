@@ -42,7 +42,7 @@ firebase.orderByChild('you').on('child_added', function(snapshot) {
 
 
 	}
-// ********** RPS Toss Win/Loose *********************
+// ********** R, P, or S has been chosen *********************
 	if (snapshot.val().chose != null) {
 		debugger;
 		if (snapshot.val().player == opponent) {
@@ -214,7 +214,8 @@ firebase.orderByChild('who').on('child_added', function(snapshot){
 		
 		} else { //if you didn't win the toss
 			$('#smackRead').prepend('<br />').prepend($('<label>').text('Opponent goes first!').css('color', 'red'));
-			$('#playerOneChoose').hide(); 
+			$('#playerOneChoose').hide();
+			$('#playerOneChoose').show(); 
 		}
 	}
 });
