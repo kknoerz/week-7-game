@@ -16,7 +16,7 @@ var coin = ''
 
 //*********** If You Are Seccond To Arrive ****************************
 firebase.orderByChild('you').on('child_added', function(snapshot) {
-	debugger;
+	// debugger;
 	
 	if (snapshot.val().you != playerName && snapshot.val().you != undefined && snapshot.val().player != opponent) { //you are seccond to arrive
 		opponent = snapshot.val().you
@@ -114,7 +114,7 @@ firebase.orderByChild('you').on('child_added', function(snapshot) {
 });
 
 // firebase.orderByChild("who").on('child_added', function(snapshot) {
-// 	debugger;
+	// debugger;
 // 	if (snapshot.val().who != null && snapshot.val().player == playerName) {
 
 // 	}
@@ -125,7 +125,7 @@ firebase.orderByChild('you').on('child_added', function(snapshot) {
 //************* Rock Paper Scissors Selection *******************************
 
 $(document).on('click', '#playerOneChoose .rock', function(){
-	debugger;
+	// debugger;
 	if (playerName != ''){
 		youChosen = 'rock'
 		$('#smackRead').prepend('<br />').prepend($('<label>').text('You chose '+youChosen));		
@@ -138,7 +138,7 @@ $(document).on('click', '#playerOneChoose .rock', function(){
 });
 
 $(document).on('click', '#playerOneChoose .paper', function(){
-	debugger;
+	// debugger;
 	if (playerName != ''){
 		youChosen = 'paper'
 		$('#smackRead').prepend('<br />').prepend($('<label>').text('You chose paper'));
@@ -151,7 +151,7 @@ $(document).on('click', '#playerOneChoose .paper', function(){
 });
 
 $(document).on('click', '#playerOneChoose .scissors', function(){
-	debugger;
+	// debugger;
 	if (playerName != ''){
 		youChosen = "scissors"
 		$('#smackRead').prepend('<br />').prepend($('<label>').text('You chose scissors'));	
@@ -170,7 +170,7 @@ $(document).on('click', '#playerOneChoose .scissors', function(){
 //************************chat room feature attempt************************
 
 // firebase.on('child_added', function(snapshot){ 
-// 	debugger;
+	// debugger;
 // 	if (snapshot.val().said != playerName ) {
 // 		var theySaid = snapshot.val().youSaid
 // 		$('#smackRead').append($('<label>').text(opponent+' says: '+theySaid)).append('<br />');
@@ -184,7 +184,7 @@ $(document).on('click', '#playerOneChoose .scissors', function(){
 //***************** Coin Flip Logic **************************************
 
 var flip = function() {
-	debugger;
+	// debugger;
 	if (youCoinFlip == 0) {
 		
 		youCoinFlip = Math.random();	
@@ -199,7 +199,7 @@ var flip = function() {
 }
 
 firebase.orderByChild('who').on('child_added', function(snapshot){
-	debugger;
+	// debugger;
 	if (snapshot.val().who != null && snapshot.val().who != playerName) {
 
 		opponent = snapshot.val().who 
@@ -211,13 +211,27 @@ firebase.orderByChild('who').on('child_added', function(snapshot){
 
 		if (youCoinFlip > oppCoinFlip) { //if you won the toss)
 			$('#smackRead').prepend('<br />').prepend($('<label>').text('You go first!').css('color', 'green'));
-		
+			// debugger;
+			$('#playerOneChoose').show();
 		} else { //if you didn't win the toss
 			$('#smackRead').prepend('<br />').prepend($('<label>').text('Opponent goes first!').css('color', 'red'));
-			$('#playerOneChoose').hide();
-			$('#playerOneChoose').show(); 
+
+
+
 		}
 	}
+});
+
+//************ Smack Talk Listener *******************************************
+
+firebase.orderByChild('youSaid').on('child_added', function(snapshot){
+	// debugger;
+	if (snapshot.val().youSaid != null) {
+		if (snapshot.val().said == opponent) {
+			$('#smackRead').prepend('<br />').prepend($('<label>').text(opponent+' says: '+snapshot.val().youSaid));
+		}
+	}
+
 });
 
 
@@ -287,6 +301,7 @@ $('#submitSmack').on('click', function(){
 $('#reset').on('click', function(){
 	firebase.remove();
 });
+
 
 
 

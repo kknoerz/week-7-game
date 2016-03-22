@@ -12,7 +12,7 @@ body {
 
 #player-input {
 	text-align: center;
-	font-size: 18pt;
+	font-size: 1.5em;
 	margin: 5px;
 	background-color: #8e91bb;
 	padding: 5px 5px;
@@ -31,7 +31,7 @@ body {
 	border: 2px solid #548ba7;
 	height: 300px;
 	text-align: center;
-	font-size: 18pt;
+	font-size: 1.5em;
 	color: #666;
 	background-color: #333;
 	padding-top: 10px;
@@ -42,7 +42,7 @@ body {
 	border: 2px solid orange;
 	height: 300px;
 	text-align: center;
-	font-size: 18pt;
+	font-size: 1.5em;
 	color: #666;
 	background-color: #333;
 	padding-top: 10px;
@@ -56,13 +56,14 @@ body {
 
 #playerOneChoose, #playerTwoChoose {
 	margin-top: 20px;
+	display: none;
 }
+
 
 .rock {
 	vertical-align: middle;
 	width: 38%;
 }
-
 #playerOneChoose img.rock:hover {
 	opacity: 0.5;
 }
@@ -74,7 +75,6 @@ body {
 	position: absolute;
     width: 33%;
 }
-
 #playerOneChoose img.paper:hover {
 	opacity: 0.5;
 }
@@ -85,7 +85,6 @@ body {
 	vertical-align: bottom;
 	width: 37%;
 }
-
 #playerOneChoose img.scissors:hover {
 	opacity: 0.5;
 }
@@ -96,7 +95,7 @@ body {
 	border: 2px solid #53544f;
 	height: 35px;
 	background-color: #ccc;
-	font-size: 18pt;
+	font-size: 1.5em;
 }
 
 #label {
