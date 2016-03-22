@@ -1,12 +1,12 @@
 
 body {
-	background-color: #888;
+	background-color: #888 !important;
 }
 #header {
 	text-align: center;
 	font-size: 24pt;
 	margin: 5px;
-	background-color: red;
+	background-color: #548ba7;
 	padding: 5px 5px;
 }
 
@@ -14,16 +14,22 @@ body {
 	text-align: center;
 	font-size: 18pt;
 	margin: 5px;
-	background-color: orange;
+	background-color: #8e91bb;
 	padding: 5px 5px;
+	height: 46px;
 }
 
-#player1, #console, #player2 {
-	border: solid 2px red;
-	width: 30%;
+#submitName {
+	margin-bottom: 3px;
+}
+
+#playerName {
+	height: 35px;
+}
+
+#player1, #player2 {
+	border: 2px solid #548ba7;
 	height: 300px;
-	margin: 10px;
-	display: inline-block;
 	text-align: center;
 	font-size: 18pt;
 	color: #666;
@@ -31,12 +37,87 @@ body {
 	padding-top: 10px;
 }
 
+
 #console {
-	border: solid 2px orange;
+	border: 2px solid orange;
+	height: 300px;
+	text-align: center;
+	font-size: 18pt;
+	color: #666;
+	background-color: #333;
+	padding-top: 10px;
 }
 
 #player-field {
-	width: 90%;
 	margin: 0 auto;
 	display: inline block;
+	margin-top: 20px;
 }
+
+#playerOneChoose, #playerTwoChoose {
+	margin-top: 20px;
+}
+
+
+
+.rock {
+	vertical-align: middle;
+	width: 38%;
+}
+
+#playerOneChoose img.rock:hover {
+	opacity: 0.5;
+}
+
+
+
+.paper {
+	vertical-align: top;
+	position: absolute;
+    width: 33%;
+}
+
+#playerOneChoose img.paper:hover {
+	opacity: 0.5;
+}
+
+
+
+.scissors {
+	vertical-align: bottom;
+	width: 37%;
+}
+
+#playerOneChoose img.scissors:hover {
+	opacity: 0.5;
+}
+
+
+
+#typeSmack {
+	border: 2px solid #53544f;
+	height: 35px;
+	background-color: #ccc;
+	font-size: 18pt;
+}
+
+#label {
+	margin-top: 20px;
+	color: #53544f;
+}
+
+#smackRead {
+	margin-top: 20px;
+	height: 100px;
+	background-color: #ccc;
+	border: 2px solid #53544f;
+	overflow: hidden;
+}
+
+#submitSmack {
+	width: 65px;
+    margin-left: 20px;
+    text-align: center;
+}
+
+

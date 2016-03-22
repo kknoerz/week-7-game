@@ -2,31 +2,49 @@
 <html>
 <head>
 	<!-- Latest compiled and minified CSS -->
-	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+	
 	<link rel="stylesheet" type="text/css" href="assets/css/style.css">
 	<link rel="stylesheet" type="text/css" href="assets/css/reset.css">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
 	<title>RPS-Multiplayer</title>
 </head>
+
 <body>
-	<h1 id="header">Rock, Paper, Scissors</h1>
-		<form id="player-input">
-			<input type="text" placeholder="Enter your name" onkeydown="overtype">
-			<input type="submit" value="Start">
-		</form>
-		<div id="player-field">
-			<div id="player1">Waiting for Player 1
-				
+	<h1 id="header">Rock Paper Scissors</h1>
+	<form id="player-input">
+		<input id="playerName"type="text" placeholder="Enter your name:">
+		<input id="submitName" type="submit" value="Start" class="btn">
+	</form>
+	<div id="player-field">
+		<div id="player1" class="col-lg-3 col-lg-offset-2 col-md-3 col-md-offset-2 col-xs-3 col-xs-offset-2">Waiting for Player 1
+			<div id="playerOneChoose">
+				<img class="rock" src="assets/images/rock.jpg">
+				<img class="paper" src="assets/images/paper.jpg">
+				<img class="scissors" src="assets/images/scissors.jpg">	
 			</div>
-			<div id="console">Console
-				
-			</div>
-			<div id="player2">Waiting for Player 2 
 		</div>
-		<div id="forSmack">
+		<div id="console" class="col-lg-2 col-md-2 col-xs-2">Console
 			
 		</div>
+		<div id="player2" class="col-lg-3 col-md-3 col-xs-3">Waiting for Player 2 
+			<div id="playerTwoChoose">
+				<img class="rock" src="assets/images/rock.jpg">
+				<img class="paper" src="assets/images/paper.jpg">
+				<img class="scissors" src="assets/images/scissors.jpg">	
+			</div>
+		</div>
 	</div>
+	<div id="smackRead" class="col-lg-offset-2 col-lg-8 col-md-offset-2 col-md-8 col-xs-offset-2 col-xs-8">
+	</div>		
+	<form>
+		<label id="label" for="typeSmack" class="col-lg-offset-2 col-lg-8 col-md-offset-2 col-md-8 col-xs-offset-2 col-xs-8">This is only used for smack-talkers.</label>
+		<input id="typeSmack" class="col-lg-offset-2 col-lg-8 col-md-offset-2 col-md-8 col-xs-offset-2 col-xs-8" tyle="text"placeholder="You said: ">
+		<input for='typeSmack' type="submit" value="submit" id="submitSmack" class="btn col-md-1 col-md-pull-9" disabled>
+		<button id="reset" >firebase.remove();</button>
+	</form>
 </body>
+<script src="https://cdn.firebase.com/js/client/2.4.1/firebase.js"></script>
 <script type="text/javascript" src='assets/javascript/ap.js'></script>
+
 </html>
