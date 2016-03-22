@@ -5,17 +5,17 @@ var playerName = ''
 var opponent = ''
 var playerBox = []
 var addPlayer = {}
-var win = 0
-var loose = 0
+var wins = 0
+var losses = 0
 var tie = 0
-var chosen = ""
-
+var youChosen = ""
+var oppChosen = ""
 
 //*********** If You Are Seccond To Arrive ****************************
-firebase.limitToFirst(2).on('child_added', function(snapshot) {
+firebase.on('child_added', function(snapshot) {
 	debugger;
 	
-	if (snapshot.val().you != playerName && snapshot.val().you != undefined) { //you are seccond to arrive
+	if (snapshot.val().you != playerName && snapshot.val().you != undefined && snapshot.val().player != opponent) { //you are seccond to arrive
 		opponent = snapshot.val().you
 		$('#smackRead').prepend('<br />').prepend($('<label>').text('Your opponent has joined the game as: '+snapshot.val().you));
 		$('#player2').text('Player 2 Ready!');
@@ -25,7 +25,10 @@ firebase.limitToFirst(2).on('child_added', function(snapshot) {
 		var paper = $('<img class="paper">').attr('src', 'assets/images/paper.jpg');
 		var scissors = $('<img class="scissors">').attr('src', 'assets/images/scissors.jpg');
 		$('#player2').append(playerTwoChoose);
-		$('#playerTwoChoose').append(rock, paper, scissors);
+		$('#playerTwoChoose').append(rock, paper, scissors).css({
+			'opacity': '0.2',
+			'background-color': 'red'
+		});
 
 		
 
@@ -37,22 +40,61 @@ firebase.limitToFirst(2).on('child_added', function(snapshot) {
 		$('#smackRead').prepend('<br />').prepend($('<label>').text('You have joined the game as: '+snapshot.val().you));
 
 		
-	} else {
-		return false
+	} else if (snapshot.val().player == playerName){
+		console.log('You chose: ', youChosen)
+	} else if (snapshot.val().player == opponent) {
+		oppChosen = snapshot.val().chose;
+		console.log(opponent+' chose: '+oppChosen)
 	}
+	
+//*********** RPS Logic ***************************************************
+	if (youChosen.length > 0 && oppChosen.length > 0) {
 
-	if (snapshot.val().player != playerName) {
-		
-	}	
+		if ((youChosen == 'rock') && (oppChosen == 'scissors')){
+            wins++;
+            $('#smackRead').prepend('<br />').prepend($('<label>').text('You won! you have: '+wins+' wins!'));
+        
+        
+        }else if ((youChosen == 'rock') && (oppChosen == 'paper')){
+            losses++;
+            $('#smackRead').prepend('<br />').prepend($('<label>').text('You lost! you have: '+losses+' losses!'));            
+        
+        
+        }else if ((youChosen == 'scissors') && (oppChosen == 'rock')){
+            losses++;
+			$('#smackRead').prepend('<br />').prepend($('<label>').text('You lost! you have: '+losses+' losses!'));            
+        
+        
+        }else if ((youChosen == 'scissors') && (oppChosen == 'paper')){
+            wins++;
+            $('#smackRead').prepend('<br />').prepend($('<label>').text('You won! you have: '+wins+' wins!'));            
+        
+
+        }else if ((youChosen == 'paper') && (oppChosen == 'rock')){
+            wins++;
+            $('#smackRead').prepend('<br />').prepend($('<label>').text('You won! you have: '+wins+' wins!'));            
+        
+
+        }else if ((youChosen == 'paper') && (oppChosen == 'scissors')){
+            losses++;
+            $('#smackRead').prepend('<br />').prepend($('<label>').text('You lost! you have: '+losses+' losses!'));
+        
+
+        }else if (youChosen == oppChosen){
+            tie++;
+            $('#smackRead').prepend('<br />').prepend($('<label>').text('You tied! you have: '+tie+' ties!'));
+        } 
+	}
 });
+
 
 //************* Rock Paper Scissors Selection *******************************
 
 $(document).on('click', '#playerOneChoose .rock', function(){
 	debugger;
 	if (playerName != ''){
-		chosen = 'rock'
-		$('#smackRead').prepend('<br />').prepend($('<label>').text('You chose '+chosen));		
+		youChosen = 'rock'
+		$('#smackRead').prepend('<br />').prepend($('<label>').text('You chose '+youChosen));		
 		var rock = {
 			player: playerName,
 			chose: 'rock'
@@ -62,8 +104,9 @@ $(document).on('click', '#playerOneChoose .rock', function(){
 });
 
 $(document).on('click', '#playerOneChoose .paper', function(){
+	debugger;
 	if (playerName != ''){
-		chosen = 'paper'
+		youChosen = 'paper'
 		$('#smackRead').prepend('<br />').prepend($('<label>').text('You chose paper'));
 		var paper = {
 			player: playerName,
@@ -74,11 +117,13 @@ $(document).on('click', '#playerOneChoose .paper', function(){
 });
 
 $(document).on('click', '#playerOneChoose .scissors', function(){
+	debugger;
 	if (playerName != ''){
+		youChosen: "scissors"
 		$('#smackRead').prepend('<br />').prepend($('<label>').text('You chose scissors'));	
 		var scissors = {
 			player: playerName,
-			chose: "scissors"
+
 		}
 		firebase.push(scissors)		
 	}
